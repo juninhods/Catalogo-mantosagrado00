@@ -880,7 +880,7 @@ const CONFIG = {
   // 2. URL do seu backend hospedado (ex: Render, Railway, etc.)
   // ATENÇÃO: Se estiver testando localmente, use "http://localhost:3000".
   // Em produção, insira a URL pública completa do seu backend.
-  API_BASE_URL: "https://seu-backend-frete.onrender.com", 
+  API_BASE_URL: "https://catalogo-mantosagrado00.onrender.com", 
 
   PRODUTO_FRETE: {
     pesoKg: 0.35,
