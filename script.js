@@ -1368,6 +1368,9 @@ function finalizarPedido() {
 // =========================
 // NAVEGAÇÃO DO CATÁLOGO
 // =========================
+// =========================
+// NAVEGAÇÃO DO CATÁLOGO (CORRIGIDA)
+// =========================
 function showPaises() {
   title.innerText = "Escolha o País";
   content.innerHTML = "";
@@ -1412,7 +1415,13 @@ function showPaises() {
 
 function showLigas(pais) {
   title.innerText = pais + " – Ligas";
-  content.innerHTML = `<div class="back" onclick="showPaises()">⬅ Voltar</div>`;
+  content.innerHTML = "";
+
+  const backBtn = document.createElement("div");
+  backBtn.className = "back";
+  backBtn.innerText = "⬅ Voltar";
+  backBtn.onclick = () => showPaises();
+  content.appendChild(backBtn);
 
   Object.keys(data[pais].ligas).forEach(liga => {
     const div = document.createElement("div");
@@ -1425,7 +1434,13 @@ function showLigas(pais) {
 
 function showTimes(pais, liga) {
   title.innerText = liga + " – Times";
-  content.innerHTML = `<div class="back" onclick="showLigas(${JSON.stringify(pais)})">⬅ Voltar</div>`;
+  content.innerHTML = "";
+
+  const backBtn = document.createElement("div");
+  backBtn.className = "back";
+  backBtn.innerText = "⬅ Voltar";
+  backBtn.onclick = () => showLigas(pais);
+  content.appendChild(backBtn);
 
   Object.keys(data[pais].ligas[liga].times).forEach(time => {
     const div = document.createElement("div");
@@ -1438,7 +1453,13 @@ function showTimes(pais, liga) {
 
 function showCamisas(pais, liga, time) {
   title.innerText = time + " – Camisas";
-  content.innerHTML = `<div class="back" onclick="showTimes(${JSON.stringify(pais)},${JSON.stringify(liga)})">⬅ Voltar</div>`;
+  content.innerHTML = "";
+
+  const backBtn = document.createElement("div");
+  backBtn.className = "back";
+  backBtn.innerText = "⬅ Voltar";
+  backBtn.onclick = () => showTimes(pais, liga);
+  content.appendChild(backBtn);
 
   data[pais].ligas[liga].times[time].camisas.forEach(camisa => {
     const precoNumerico = numero(camisa.preco);
