@@ -1,0 +1,16 @@
+{
+  "name": "manto-sagrado-frete-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Proxy seguro para cotação da SuperFrete do catálogo Manto Sagrado",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

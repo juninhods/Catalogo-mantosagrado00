@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo de Camisas ⚽ | Manto Sagrado</title>
+<link rel="icon" type="image/png" href="imagens/manto.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header-global">
+  <img src="imagens/manto2.png" alt="Logo Manto Sagrado" class="logo-global">
+  <h1 id="title">Escolha o País</h1>
+</header>
+
+<button class="cart-button" onclick="openCart()">
+  🛒 Carrinho <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<main class="container" id="content"></main>
+
+<!-- Zoom -->
+<div id="imageModal" class="modal" onclick="closeModal()">
+  <span class="close">&times;</span>
+  <img id="modalImg" alt="Visualização da camisa">
+</div>
+
+<!-- Carrinho -->
+<div id="cartModal" class="overlay" onclick="closeCartOutside(event)">
+  <div class="cart-box">
+    <div class="cart-header">
+      <h2>🛒 Meu Carrinho</h2>
+      <button class="cart-close" onclick="closeCart()">&times;</button>
+    </div>
+    <div id="cartItems"></div>
+    <div class="cart-subtotal">Subtotal: <strong id="cartSubtotal">R$ 0,00</strong></div>
+    <div class="cart-shipping">Entrega: <strong id="cartShipping">A calcular</strong></div>
+    <div class="cart-total">Total: <span id="cartTotal">R$ 0,00</span></div>
+    <button class="checkout" onclick="abrirCheckout()">Continuar para entrega</button>
+  </div>
+</div>
+
+<!-- Personalização -->
+<div id="customModal" class="overlay" onclick="closeCustomOutside(event)">
+  <div class="form-box">
+    <button class="form-close" onclick="fecharPersonalizacao()">&times;</button>
+    <h2>Como você quer a camisa?</h2>
+    <p class="notice">Personalização acrescenta <strong>R$ 60,00</strong> por camisa.</p>
+
+    <label class="choice">
+      <input type="radio" name="customType" value="lisa" checked onchange="toggleCustomFields()">
+      <span><strong>Camisa lisa</strong><small>Sem nome, número ou outros detalhes.</small></span>
+    </label>
+
+    <label class="choice">
+      <input type="radio" name="customType" value="personalizada" onchange="toggleCustomFields()">
+      <span><strong>Personalizada + R$ 60,00</strong><small>Informe exatamente o que deseja.</small></span>
+    </label>
+
+    <div id="customFields" class="hidden">
+      <label for="customDetails">O que deseja personalizar?</label>
+      <textarea id="customDetails" rows="4" placeholder="Ex.: Nome: Lamine Yamal | Número: 10"></textarea>
+      <small class="help">Você pode informar nome, número, patrocinador ou outra personalização.</small>
+    </div>
+
+    <button class="primary-action" onclick="confirmarPersonalizacao()">Adicionar ao carrinho</button>
+  </div>
+</div>
+
+<!-- Checkout -->
+<div id="checkoutModal" class="overlay" onclick="closeCheckoutOutside(event)">
+  <div class="checkout-box">
+    <button class="form-close" onclick="fecharCheckout()">&times;</button>
+    <h2>📦 Entrega do pedido</h2>
+
+    <div class="checkout-summary">
+      <div>Subtotal: <strong id="checkoutSubtotal">R$ 0,00</strong></div>
+      <div>Frete: <strong id="checkoutShipping">A calcular</strong></div>
+      <div class="grand-total">Total: <strong id="checkoutTotal">R$ 0,00</strong></div>
+    </div>
+
+    <div class="delivery-options">
+      <label class="delivery-choice">
+        <input type="radio" name="deliveryType" value="frete" checked onchange="alterarTipoEntrega()">
+        <span><strong>Calcular frete</strong><small>Consulte Correios e transportadoras disponíveis.</small></span>
+      </label>
+      <label class="delivery-choice">
+        <input type="radio" name="deliveryType" value="combinar" onchange="alterarTipoEntrega()">
+        <span><strong>Combinar entrega</strong><small>Para locais próximos onde a entrega em mãos seja possível.</small></span>
+      </label>
+    </div>
+
+    <div id="freteFields">
+      <label for="cepDestino">CEP de destino</label>
+      <input id="cepDestino" class="input" inputmode="numeric" maxlength="9" placeholder="00000-000" oninput="mascararCEP(this)">
+      <button class="secondary-action" onclick="calcularFrete()">Calcular frete</button>
+      <div id="freteStatus" class="status"></div>
+      <div id="freteOptions" class="frete-options"></div>
+    </div>
+
+    <div id="combinarFields" class="hidden">
+      <label for="localEntrega">Local para combinar a entrega</label>
+      <input id="localEntrega" class="input" list="locaisEntrega" placeholder="Ex.: Centro de Registro-SP">\n      <datalist id="locaisEntrega"></datalist>
+      <p class="help">A entrega em mãos fica sujeita à confirmação da Manto Sagrado pelo WhatsApp.</p>
+    </div>
+
+    <button class="checkout whatsapp-btn" onclick="finalizarPedido()">Finalizar pedido pelo WhatsApp</button>
+  </div>
+</div>
+
+<!-- Cookies -->
+<div id="cookieBanner" class="cookie-banner">
+  <div>
+    <strong>🍪 Este site usa cookies</strong>
+    <p>Usamos armazenamento local para manter o carrinho e sua preferência de cookies.</p>
+  </div>
+  <button onclick="aceitarCookies()">Aceitar</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
