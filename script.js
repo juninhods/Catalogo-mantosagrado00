@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("click", (event) => {
     const imagem = event.target.closest("img");
     if (!imagem || imagem.closest(".manto-zoom-camisa")) return;
-    const identificador = `${imagem.alt || ""} ${imagem.currentSrc || imagem.src || ""}`.toLowerCase();
-    const ehFotoDaCamisa = imagem.matches("[data-zoom-camisa], .camisa-img, .camisa-imagem, .produto-imagem, .product-image") || /camisa|manto|jersey|shirt/.test(identificador);
+    const cardDaCamisa = imagem.closest(".product-card, .produto-card, .camisa-card, [data-product]");
+    const ehFotoDaCamisa = imagem.matches("[data-zoom-camisa], .camisa-img, .camisa-imagem") || Boolean(cardDaCamisa);
     if (!ehFotoDaCamisa) return;
 
     event.preventDefault();
