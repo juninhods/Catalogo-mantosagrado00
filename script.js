@@ -1,5 +1,60 @@
 
 // ============================================================
+// Melhorias de interface: foto ampliada, tamanhos e frete.
+document.addEventListener("DOMContentLoaded", () => {
+  const apiFrete = "https://catalogo-mantosagrado00.onrender.com/api/frete";
+  const tamanhoOpcoes = ["P", "M", "G", "GG", "G1"];
+  const style = document.createElement("style");
+  style.textContent = ".manto-zoom{cursor:zoom-in}.manto-modal{position:fixed;inset:0;z-index:9999;display:none;place-items:center;background:#000c;padding:24px}.manto-modal.aberto{display:grid}.manto-modal img{max-width:92vw;max-height:86vh;border-radius:10px}.manto-modal button{position:absolute;top:18px;right:18px;border:0;border-radius:50%;width:42px;height:42px;font-size:26px;cursor:pointer}.manto-tamanho{width:100%;padding:10px;margin:10px 0;border:1px solid #aaa;border-radius:7px;font:inherit}.manto-frete-resultado{margin-top:10px;line-height:1.5}";
+  document.head.appendChild(style);
+  const modal = document.createElement("div");
+  modal.className = "manto-modal";
+  modal.innerHTML = '<button type="button" aria-label="Fechar">×</button><img alt="Imagem ampliada">';
+  document.body.appendChild(modal);
+  const fechar = () => modal.classList.remove("aberto");
+  modal.querySelector("button").onclick = fechar;
+  modal.onclick = (event) => { if (event.target === modal) fechar(); };
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") fechar(); });
+
+  const cards = [...document.querySelectorAll(".product-card, .produto, [data-product], .card")].filter((card) => card.querySelector("img"));
+  cards.forEach((card) => {
+    const image = card.querySelector("img");
+    image.classList.add("manto-zoom");
+    image.addEventListener("click", () => { modal.querySelector("img").src = image.currentSrc || image.src; modal.classList.add("aberto"); });
+    if (!card.querySelector(".manto-tamanho")) {
+      const select = document.createElement("select");
+      select.className = "manto-tamanho";
+      select.setAttribute("aria-label", "Selecione o tamanho");
+      select.innerHTML = '<option value="" selected disabled>Selecione o tamanho</option>' + tamanhoOpcoes.map((item) => `<option value="${item}">${item}</option>`).join("");
+      select.onchange = () => { card.dataset.tamanho = select.value; };
+      const action = card.querySelector("button, a");
+      (action?.parentElement || card).insertBefore(select, action || null);
+    }
+  });
+
+  const cep = document.querySelector("#cep, #cepDestino, input[name='cep'], input[name='cepDestino']");
+  const botaoFrete = document.querySelector("#calcularFrete, [data-calcular-frete], .calcular-frete");
+  if (!cep) return;
+  const resultado = document.createElement("div");
+  resultado.className = "manto-frete-resultado";
+  resultado.setAttribute("aria-live", "polite");
+  cep.insertAdjacentElement("afterend", resultado);
+  const calcular = async (event) => {
+    event?.preventDefault();
+    const cepDestino = cep.value.replace(/\D/g, "");
+    if (cepDestino.length !== 8) return void (resultado.textContent = "Informe um CEP válido com 8 números.");
+    resultado.textContent = "Calculando frete…";
+    try {
+      const response = await fetch(apiFrete, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ cepDestino }) });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Não foi possível calcular o frete.");
+      const servicos = Array.isArray(data) ? data : (data.services || data.data || []);
+      resultado.innerHTML = servicos.length ? servicos.map((item) => `${item.name || item.service_name || "Entrega"}: <strong>R$ ${Number(item.price || item.total || 0).toFixed(2).replace(".", ",")}</strong>`).join("<br>") : "Nenhuma opção encontrada para este CEP.";
+    } catch (error) { resultado.textContent = error.message || "Não foi possível calcular o frete."; }
+  };
+  if (botaoFrete) botaoFrete.addEventListener("click", calcular);
+  else cep.closest("form")?.addEventListener("submit", calcular);
+});
 // MANTO SAGRADO — CATÁLOGO
 // Dados dos produtos + navegação + carrinho + checkout
 // ============================================================
