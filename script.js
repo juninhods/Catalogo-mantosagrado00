@@ -2,6 +2,87 @@
 // ============================================================
 // Melhorias de interface: foto ampliada, tamanhos e frete.
 document.addEventListener("DOMContentLoaded", () => {
+  const zoom = document.createElement("div");
+  zoom.className = "manto-zoom-camisa";
+  zoom.setAttribute("role", "dialog");
+  zoom.setAttribute("aria-modal", "true");
+  zoom.setAttribute("aria-label", "Foto ampliada da camisa");
+  zoom.innerHTML = '<button type="button" aria-label="Fechar foto">×</button><img alt="Foto ampliada da camisa">';
+  document.body.appendChild(zoom);
+
+  const estilo = document.createElement("style");
+  estilo.textContent = ".manto-zoom-camisa{display:none;position:fixed;inset:0;z-index:10000;place-items:center;padding:24px;background:rgba(0,0,0,.88)}.manto-zoom-camisa.aberto{display:grid}.manto-zoom-camisa img{max-width:92vw;max-height:86vh;object-fit:contain;border-radius:10px;background:#fff}.manto-zoom-camisa button{position:absolute;top:18px;right:18px;width:42px;height:42px;border:0;border-radius:50%;font-size:26px;line-height:1;background:#fff;color:#111;cursor:pointer}.manto-foto-camisa{cursor:zoom-in}";
+  document.head.appendChild(estilo);
+
+  const fecharZoom = () => zoom.classList.remove("aberto");
+  zoom.querySelector("button").addEventListener("click", fecharZoom);
+  zoom.addEventListener("click", (event) => { if (event.target === zoom) fecharZoom(); });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") fecharZoom(); });
+
+  document.addEventListener("click", (event) => {
+    const imagem = event.target.closest("img");
+    if (!imagem || imagem.closest(".manto-zoom-camisa")) return;
+    const identificador = `${imagem.alt || ""} ${imagem.currentSrc || imagem.src || ""}`.toLowerCase();
+    const ehFotoDaCamisa = imagem.matches("[data-zoom-camisa], .camisa-img, .camisa-imagem, .produto-imagem, .product-image") || /camisa|manto|jersey|shirt/.test(identificador);
+    if (!ehFotoDaCamisa) return;
+
+    event.preventDefault();
+    imagem.classList.add("manto-foto-camisa");
+    zoom.querySelector("img").src = imagem.currentSrc || imagem.src;
+    zoom.querySelector("img").alt = imagem.alt || "Foto da camisa";
+    zoom.classList.add("aberto");
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const localizarModalPedido = () => [...document.querySelectorAll("div")].find((elemento) =>
+    elemento.offsetParent && elemento.textContent.includes("Como você quer a camisa?") &&
+    [...elemento.querySelectorAll("button")].some((botao) => /adicionar ao carrinho/i.test(botao.textContent))
+  );
+
+  const inserirTamanhos = () => {
+    const modal = localizarModalPedido();
+    if (!modal || modal.querySelector(".manto-tamanhos-pedido")) return;
+    const botaoAdicionar = [...modal.querySelectorAll("button")].find((botao) => /adicionar ao carrinho/i.test(botao.textContent));
+    if (!botaoAdicionar) return;
+
+    const bloco = document.createElement("fieldset");
+    bloco.className = "manto-tamanhos-pedido";
+    bloco.innerHTML = `
+      <legend>Escolha o tamanho</legend>
+      <div class="manto-tamanhos-opcoes">
+        ${["P", "M", "G", "GG", "G1"].map((tamanho) => `<label><input type="radio" name="manto-tamanho" value="${tamanho}"><span>${tamanho}</span></label>`).join("")}
+      </div>
+      <p class="manto-tamanho-erro" aria-live="polite"></p>`;
+    botaoAdicionar.parentElement.insertBefore(bloco, botaoAdicionar);
+
+    const estilo = document.createElement("style");
+    estilo.textContent = ".manto-tamanhos-pedido{margin:16px 0;border:0;padding:0}.manto-tamanhos-pedido legend{font-size:16px;font-weight:700;margin-bottom:10px}.manto-tamanhos-opcoes{display:flex;flex-wrap:wrap;gap:8px}.manto-tamanhos-opcoes label{position:relative;cursor:pointer}.manto-tamanhos-opcoes input{position:absolute;opacity:0}.manto-tamanhos-opcoes span{display:grid;place-items:center;min-width:48px;height:40px;padding:0 10px;border:1px solid #46605f;border-radius:8px;font-weight:700}.manto-tamanhos-opcoes input:checked+span{background:#00e4c3;color:#061919;border-color:#00e4c3}.manto-tamanhos-opcoes input:focus-visible+span{outline:2px solid #fff;outline-offset:2px}.manto-tamanho-erro{min-height:18px;margin:8px 0 0;color:#ffb4aa;font-size:14px}";
+    document.head.appendChild(estilo);
+  };
+
+  new MutationObserver(inserirTamanhos).observe(document.body, { childList: true, subtree: true });
+  inserirTamanhos();
+
+  document.addEventListener("click", (event) => {
+    const botao = event.target.closest("button");
+    if (!botao || !/adicionar ao carrinho/i.test(botao.textContent)) return;
+    const modal = localizarModalPedido();
+    if (!modal || !modal.contains(botao)) return;
+    const tamanho = modal.querySelector("input[name='manto-tamanho']:checked");
+    const erro = modal.querySelector(".manto-tamanho-erro");
+    if (!tamanho) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      erro.textContent = "Escolha um tamanho antes de adicionar ao carrinho.";
+      return;
+    }
+    modal.dataset.tamanhoSelecionado = tamanho.value;
+    erro.textContent = "";
+  }, true);
+});
+
+if (false) document.addEventListener("DOMContentLoaded", () => {
   const apiFrete = "https://catalogo-mantosagrado00.onrender.com/api/frete";
   const tamanhoOpcoes = ["P", "M", "G", "GG", "G1"];
   const style = document.createElement("style");
