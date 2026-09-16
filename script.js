@@ -1191,6 +1191,8 @@ function mascararCEP(input) {
 
 async function calcularFreteSuperFrete(cepDestino) {
   const elementoResultado = document.getElementById("resultado-frete");
+  
+  // Limpa o CEP digitado deixando apenas números
   const cepLimpo = String(cepDestino).replace(/\D/g, '');
 
   if (cepLimpo.length !== 8) {
@@ -1198,40 +1200,57 @@ async function calcularFreteSuperFrete(cepDestino) {
     return;
   }
 
+  // Objeto exatamente com a estrutura que a SuperFrete exige
   const dadosRequisicao = {
-    from: { postal_code: "01153000" },
-    to: { postal_code: cepLimpo },
-    services: "1,2,17",
-    package: { weight: 0.3, height: 5, width: 15, length: 20 },
-    options: { own_hand: false, receipt: false, insurance_value: 0, use_insurance_value: false }
+    from: {
+      postal_code: "11900000" // CEP de origem da sua loja
+    },
+    to: {
+      postal_code: cepLimpo  // CEP de destino digitado pelo cliente
+    },
+    services: "1,2,17",     // 1: PAC, 2: SEDEX, 17: Mini Envios
+    package: {
+      weight: 0.3,          // 300 gramas (peso médio de uma camisa)
+      height: 5,            // 5 cm
+      width: 15,            // 15 cm
+      length: 20            // 20 cm
+    },
+    options: {
+      own_hand: false,
+      receipt: false,
+      insurance_value: 0,
+      use_insurance_value: false
+    }
   };
 
   try {
     if (elementoResultado) elementoResultado.innerText = "Calculando frete...";
 
-    // Usando o proxy para evitar o "Failed to fetch" (CORS)
-    const urlTarget = "https://sandbox.superfrete.com/api/v0/calculator";
-    const response = await fetch("https://corsproxy.io/?" + encodeURIComponent(urlTarget), {
+    const response = await fetch("https://sandbox.superfrete.com/api/v0/calculator", {
       method: "POST",
       headers: {
         "accept": "application/json",
         "content-type": "application/json",
+        "User-Agent": "Manto-Sagrado/00 (amauripcfexdc@gmail.com)",
         "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODkzMzY0MTIsInN1YiI6Ikt5YUJUSW5oa3dadHdERkF1U21CbHVLVk5KSzIifQ.b4jaeX26r4_C_WWKlNZBe3B5GdrvxbwFwNHkdzOlR88"
       },
       body: JSON.stringify(dadosRequisicao)
     });
 
-    if (!response.ok) throw new Error(`Status: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`Erro na API: ${response.status}`);
+    }
 
     const data = await response.json();
 
+    // Renderiza o resultado na tela
     if (elementoResultado) {
       elementoResultado.innerHTML = "";
       data.forEach(opcao => {
         if (!opcao.error) {
           elementoResultado.innerHTML += `
             <div class="frete-item">
-              <strong>${escapeHtml(opcao.name)}:</strong> ${moeda(opcao.price)} (${opcao.delivery_time} dias úteis)
+              <strong>${escapeHtml(opcao.name)}:</strong> R$ ${opcao.price} (${opcao.delivery_time} dias úteis)
             </div>
           `;
         }
@@ -1239,12 +1258,13 @@ async function calcularFreteSuperFrete(cepDestino) {
     }
 
   } catch (error) {
-    console.error("Erro no cálculo:", error);
+    console.error("Erro ao calcular frete:", error);
     if (elementoResultado) {
-      elementoResultado.innerText = "Não foi possível calcular o frete para este CEP.";
+      elementoResultado.innerText = "Erro ao calcular o frete. Verifique o CEP digitado.";
     }
   }
 }
+
 // =========================
 // WHATSAPP
 // =========================
