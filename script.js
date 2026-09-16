@@ -16,9 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
   modal.onclick = (event) => { if (event.target === modal) fechar(); };
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") fechar(); });
 
-  const cards = [...document.querySelectorAll(".product-card, .produto, [data-product], .card")].filter((card) => card.querySelector("img"));
+  const aplicarProdutos = () => {
+  const cards = [...document.querySelectorAll(".product-card, .produto-card, .produto, .camisa-card, [data-product], .card")].filter((card) => card.querySelector("img"));
   cards.forEach((card) => {
     const image = card.querySelector("img");
+    if (image.dataset.mantoZoom) return;
+    image.dataset.mantoZoom = "true";
     image.classList.add("manto-zoom");
     image.addEventListener("click", () => { modal.querySelector("img").src = image.currentSrc || image.src; modal.classList.add("aberto"); });
     if (!card.querySelector(".manto-tamanho")) {
@@ -31,6 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
       (action?.parentElement || card).insertBefore(select, action || null);
     }
   });
+  };
+  aplicarProdutos();
+  new MutationObserver(aplicarProdutos).observe(document.body, { childList: true, subtree: true });
 
   const cep = document.querySelector("#cep, #cepDestino, input[name='cep'], input[name='cepDestino']");
   const botaoFrete = document.querySelector("#calcularFrete, [data-calcular-frete], .calcular-frete");
