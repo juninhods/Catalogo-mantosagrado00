@@ -1508,8 +1508,7 @@ function showPaises() {
 
     div.innerHTML = `
       <button type="button" class="shirt-image-button" data-zoom-src="${camisa.img}" aria-label="Ampliar foto de ${escapeHtml(camisa.nome)}">
-        <span class="zoom-hint">🔍 Clique para ampliar</span>
-        <img src="${camisa.img}" alt="${escapeHtml(camisa.nome)}">
+          <img src="${camisa.img}" alt="${escapeHtml(camisa.nome)}">
       </button>
       <h3>${escapeHtml(camisa.nome)}</h3>
       <p>${moeda(precoNumerico)}</p>
@@ -1579,8 +1578,7 @@ function showCamisas(pais, liga, time) {
 
     div.innerHTML = `
       <button type="button" class="shirt-image-button" data-zoom-src="${camisa.img}" aria-label="Ampliar foto de ${escapeHtml(camisa.nome)}">
-        <span class="zoom-hint">🔍 Clique para ampliar</span>
-        <img src="${camisa.img}" alt="${escapeHtml(camisa.nome)}">
+          <img src="${camisa.img}" alt="${escapeHtml(camisa.nome)}">
       </button>
       <h3>${escapeHtml(camisa.nome)}</h3>
       <p>${moeda(precoNumerico)}</p>

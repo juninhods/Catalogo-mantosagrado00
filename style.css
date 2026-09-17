@@ -575,19 +575,7 @@ body.image-modal-open { overflow: hidden; }
   transition: transform .2s ease, filter .2s ease;
 }
 .shirt-image-button:hover img { transform: scale(1.035); filter: brightness(1.06); }
-.zoom-hint {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  z-index: 2;
-  padding: 6px 9px;
-  border-radius: 999px;
-  background: rgba(0,0,0,.72);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  pointer-events: none;
-}
+
 #imageModal.is-open { display: flex !important; }
 #imageModal { cursor: zoom-out; }
 #imageModal #modalImg {
