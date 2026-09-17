@@ -550,117 +550,57 @@ textarea { resize: vertical; }
   }
 }
 
-/* Seletor de tamanho do pedido */
-.size-picker {
-  border: 0;
+
+/* ZOOM V3 — clique diretamente na foto da camisa */
+body.image-modal-open { overflow: hidden; }
+.shirt-image-button {
+  position: relative;
+  display: block;
+  width: 100%;
   padding: 0;
-  margin: 18px 0 6px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: zoom-in;
+  border-radius: 12px;
+  overflow: hidden;
 }
-.size-picker legend {
-  font-weight: 700;
-  margin-bottom: 10px;
+.shirt-image-button img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  cursor: zoom-in;
+  transition: transform .2s ease, filter .2s ease;
 }
-.size-options {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-}
-.size-options label { margin: 0; cursor: pointer; }
-.size-options input {
+.shirt-image-button:hover img { transform: scale(1.035); filter: brightness(1.06); }
+.zoom-hint {
   position: absolute;
-  opacity: 0;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.72);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
   pointer-events: none;
 }
-.size-options span {
-  display: grid;
-  place-items: center;
-  min-height: 44px;
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 10px;
-  background: rgba(255,255,255,.06);
-  font-weight: 700;
-  transition: .2s;
-}
-.size-options input:checked + span {
-  background: #00ffcc;
-  color: #071114;
-  border-color: #00ffcc;
-}
-.size-options input:focus-visible + span {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
-}
-.field-error {
-  min-height: 18px;
-  margin: 8px 0 0;
-  color: #ffb4aa;
-  font-size: 13px;
-}
-
-@media (max-width: 430px) {
-  .size-options { grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 6px; }
-  .size-options span { min-height: 42px; }
-}
-
-
-/* ZOOM DA CAMISA - clique na foto para ampliar */
-body.image-modal-open { overflow: hidden; }
-#imageModal { cursor: zoom-out; padding: 20px; box-sizing: border-box; }
-#imageModal #modalImg { cursor: default; object-fit: contain; width: auto; height: auto; max-width: 92vw; max-height: 90vh; }
-@media (max-width: 600px) {
-  #imageModal #modalImg { max-width: 96vw; max-height: 84vh; border-radius: 8px; }
-  #imageModal .close { top: 8px; right: 16px; font-size: 36px; }
-}
-
-
-/* === ZOOM REAL DA FOTO DA CAMISA === */
-body.image-modal-open { overflow: hidden; }
-.image-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 5000;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  padding: 60px 24px 24px;
-  background: rgba(0,0,0,.94);
-  align-items: center;
-  justify-content: center;
-  cursor: zoom-out;
-}
-.image-modal img {
+#imageModal.is-open { display: flex !important; }
+#imageModal { cursor: zoom-out; }
+#imageModal #modalImg {
   display: block;
   width: auto !important;
   height: auto !important;
-  max-width: min(94vw, 900px) !important;
+  max-width: 92vw !important;
   max-height: 88vh !important;
   object-fit: contain !important;
-  border-radius: 12px;
-  box-shadow: 0 20px 70px rgba(0,0,0,.65);
   cursor: default;
   transform: none !important;
 }
-.image-modal-close {
-  position: absolute;
-  top: 14px;
-  right: 18px;
-  z-index: 5001;
-  width: 46px;
-  height: 46px;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(255,255,255,.14);
-  color: #fff;
-  font-size: 34px;
-  line-height: 1;
-  cursor: pointer;
-}
-.image-modal-close:hover { background: rgba(255,255,255,.24); }
-.zoom-container { cursor: zoom-in; }
-.zoom-container img { cursor: zoom-in; }
 @media (max-width: 600px) {
-  .image-modal { padding: 58px 10px 12px; }
-  .image-modal img { max-width: 96vw !important; max-height: 84vh !important; }
-  .image-modal-close { top: 8px; right: 10px; width: 44px; height: 44px; }
+  .shirt-image-button img { height: 190px; }
+  #imageModal #modalImg { max-width: 96vw !important; max-height: 84vh !important; }
 }
