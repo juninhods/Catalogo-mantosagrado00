@@ -1022,7 +1022,11 @@ const CONFIG = {
   // 2. URL do seu backend hospedado (ex: Render, Railway, etc.)
   // ATENÇÃO: Se estiver testando localmente, use "http://localhost:3000".
   // Em produção, insira a URL pública completa do seu backend.
-  API_BASE_URL: "https://catalogo-mantosagrado00.onrender.com", 
+  API_BASE_URL:
+      (window.location.hostname === "localhost" ||
+       window.location.hostname === "127.0.0.1")
+        ? "http://localhost:3000"
+        : "", 
 
   PRODUTO_FRETE: {
     pesoKg: 0.35,
