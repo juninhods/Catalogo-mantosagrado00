@@ -1457,19 +1457,29 @@ function showCamisas(pais, liga, time) {
 function openModal(img) {
   const modal = document.getElementById("imageModal");
   const modalImg = document.getElementById("modalImg");
+  if (!modal || !modalImg || !img) return;
+
   modalImg.src = img;
   modal.style.display = "flex";
+  modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("image-modal-open");
 }
 
-function stopModalClick(event) {
-  event.stopPropagation();
+function closeModal(event) {
+  if (event) event.stopPropagation();
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  if (!modal) return;
+
+  modal.style.display = "none";
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("image-modal-open");
+  if (modalImg) modalImg.removeAttribute("src");
 }
 
-function closeModal() {
-  document.getElementById("imageModal").style.display = "none";
-  document.body.classList.remove("image-modal-open");
-}
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") closeModal();
+});
 
 function aceitarCookies() {
   localStorage.setItem("mantoSagradoCookies", "aceitos");

@@ -20,10 +20,10 @@
 
 <main class="container" id="content"></main>
 
-<!-- Zoom -->
-<div id="imageModal" class="modal" onclick="closeModal()">
-  <span class="close">&times;</span>
-  <img id="modalImg" alt="Visualização da camisa" onclick="stopModalClick(event)">
+<!-- Zoom das camisas -->
+<div id="imageModal" class="image-modal" aria-hidden="true" role="dialog" aria-label="Visualização da camisa" onclick="closeModal(event)">
+  <button type="button" class="image-modal-close" aria-label="Fechar imagem" onclick="closeModal(event)">&times;</button>
+  <img id="modalImg" alt="Visualização ampliada da camisa" onclick="event.stopPropagation()">
 </div>
 
 <!-- Carrinho -->

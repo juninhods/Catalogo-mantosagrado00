@@ -611,3 +611,56 @@ body.image-modal-open { overflow: hidden; }
   #imageModal #modalImg { max-width: 96vw; max-height: 84vh; border-radius: 8px; }
   #imageModal .close { top: 8px; right: 16px; font-size: 36px; }
 }
+
+
+/* === ZOOM REAL DA FOTO DA CAMISA === */
+body.image-modal-open { overflow: hidden; }
+.image-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 60px 24px 24px;
+  background: rgba(0,0,0,.94);
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.image-modal img {
+  display: block;
+  width: auto !important;
+  height: auto !important;
+  max-width: min(94vw, 900px) !important;
+  max-height: 88vh !important;
+  object-fit: contain !important;
+  border-radius: 12px;
+  box-shadow: 0 20px 70px rgba(0,0,0,.65);
+  cursor: default;
+  transform: none !important;
+}
+.image-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  z-index: 5001;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+}
+.image-modal-close:hover { background: rgba(255,255,255,.24); }
+.zoom-container { cursor: zoom-in; }
+.zoom-container img { cursor: zoom-in; }
+@media (max-width: 600px) {
+  .image-modal { padding: 58px 10px 12px; }
+  .image-modal img { max-width: 96vw !important; max-height: 84vh !important; }
+  .image-modal-close { top: 8px; right: 10px; width: 44px; height: 44px; }
+}
