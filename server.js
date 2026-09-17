@@ -18,12 +18,9 @@ app.use((req, res, next) => {
   if (origin && allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Vary", "Origin");
-  } else if (!FRONTEND_ORIGIN) {
-    // Endpoint público de cotação; não usa cookies/credenciais.
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   }
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") return res.sendStatus(204);
   next();
@@ -34,7 +31,6 @@ app.get("/health", (_req, res) => res.json({ status: "ok" }));
 
 app.post("/api/frete", async (req, res) => {
   const cepDestino = String(req.body?.cepDestino || "").replace(/\D/g, "");
-  const quantidade = Math.max(1, Math.min(20, Number(req.body?.quantidade) || 1));
 
   if (!/^\d{8}$/.test(cepDestino)) {
     return res.status(400).json({ error: "Informe um CEP válido com 8 números." });
@@ -54,15 +50,10 @@ app.post("/api/frete", async (req, res) => {
         Authorization: `Bearer ${SUPERFRETE_TOKEN}`,
       },
       body: JSON.stringify({
-        from: { postal_code: process.env.CEP_ORIGEM || "11900000" },
+        from: { postal_code: "01153000" },
         to: { postal_code: cepDestino },
-        services: process.env.SUPERFRETE_SERVICES || "1,2,17",
-        package: {
-          weight: Number((0.35 * quantidade).toFixed(3)),
-          height: 5 * quantidade,
-          width: 25,
-          length: 35
-        },
+        services: "1,2,17",
+        package: { weight: 0.3, height: 5, width: 15, length: 20 },
         options: { own_hand: false, receipt: false, insurance_value: 0, use_insurance_value: false },
       }),
     });
