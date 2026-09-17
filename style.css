@@ -601,3 +601,13 @@ textarea { resize: vertical; }
   .size-options { grid-template-columns: repeat(5, minmax(48px, 1fr)); gap: 6px; }
   .size-options span { min-height: 42px; }
 }
+
+
+/* ZOOM DA CAMISA - clique na foto para ampliar */
+body.image-modal-open { overflow: hidden; }
+#imageModal { cursor: zoom-out; padding: 20px; box-sizing: border-box; }
+#imageModal #modalImg { cursor: default; object-fit: contain; width: auto; height: auto; max-width: 92vw; max-height: 90vh; }
+@media (max-width: 600px) {
+  #imageModal #modalImg { max-width: 96vw; max-height: 84vh; border-radius: 8px; }
+  #imageModal .close { top: 8px; right: 16px; font-size: 36px; }
+}

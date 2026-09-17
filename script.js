@@ -1455,12 +1455,20 @@ function showCamisas(pais, liga, time) {
 // MODAL DE IMAGEM / COOKIES
 // =========================
 function openModal(img) {
-  document.getElementById("imageModal").style.display = "flex";
-  document.getElementById("modalImg").src = img;
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  modalImg.src = img;
+  modal.style.display = "flex";
+  document.body.classList.add("image-modal-open");
+}
+
+function stopModalClick(event) {
+  event.stopPropagation();
 }
 
 function closeModal() {
   document.getElementById("imageModal").style.display = "none";
+  document.body.classList.remove("image-modal-open");
 }
 
 function aceitarCookies() {
