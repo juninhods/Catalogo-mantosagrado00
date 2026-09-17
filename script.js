@@ -1,147 +1,3 @@
-
-// ============================================================
-// Melhorias de interface: foto ampliada, tamanhos e frete.
-document.addEventListener("DOMContentLoaded", () => {
-  const zoom = document.createElement("div");
-  zoom.className = "manto-zoom-camisa";
-  zoom.setAttribute("role", "dialog");
-  zoom.setAttribute("aria-modal", "true");
-  zoom.setAttribute("aria-label", "Foto ampliada da camisa");
-  zoom.innerHTML = '<button type="button" aria-label="Fechar foto">×</button><img alt="Foto ampliada da camisa">';
-  document.body.appendChild(zoom);
-
-  const estilo = document.createElement("style");
-  estilo.textContent = ".manto-zoom-camisa{display:none;position:fixed;inset:0;z-index:10000;place-items:center;padding:24px;background:rgba(0,0,0,.88)}.manto-zoom-camisa.aberto{display:grid}.manto-zoom-camisa img{max-width:92vw;max-height:86vh;object-fit:contain;border-radius:10px;background:#fff}.manto-zoom-camisa button{position:absolute;top:18px;right:18px;width:42px;height:42px;border:0;border-radius:50%;font-size:26px;line-height:1;background:#fff;color:#111;cursor:pointer}.manto-foto-camisa{cursor:zoom-in}";
-  document.head.appendChild(estilo);
-
-  const fecharZoom = () => zoom.classList.remove("aberto");
-  zoom.querySelector("button").addEventListener("click", fecharZoom);
-  zoom.addEventListener("click", (event) => { if (event.target === zoom) fecharZoom(); });
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape") fecharZoom(); });
-
-  document.addEventListener("click", (event) => {
-    const imagem = event.target.closest("img");
-    if (!imagem || imagem.closest(".manto-zoom-camisa")) return;
-    const cardDaCamisa = imagem.closest(".product-card, .produto-card, .camisa-card, [data-product]");
-    const ehFotoDaCamisa = imagem.matches("[data-zoom-camisa], .camisa-img, .camisa-imagem") || Boolean(cardDaCamisa);
-    if (!ehFotoDaCamisa) return;
-
-    event.preventDefault();
-    imagem.classList.add("manto-foto-camisa");
-    zoom.querySelector("img").src = imagem.currentSrc || imagem.src;
-    zoom.querySelector("img").alt = imagem.alt || "Foto da camisa";
-    zoom.classList.add("aberto");
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const localizarModalPedido = () => [...document.querySelectorAll("div")].find((elemento) =>
-    elemento.offsetParent && elemento.textContent.includes("Como você quer a camisa?") &&
-    [...elemento.querySelectorAll("button")].some((botao) => /adicionar ao carrinho/i.test(botao.textContent))
-  );
-
-  const inserirTamanhos = () => {
-    const modal = localizarModalPedido();
-    if (!modal || modal.querySelector(".manto-tamanhos-pedido")) return;
-    const botaoAdicionar = [...modal.querySelectorAll("button")].find((botao) => /adicionar ao carrinho/i.test(botao.textContent));
-    if (!botaoAdicionar) return;
-
-    const bloco = document.createElement("fieldset");
-    bloco.className = "manto-tamanhos-pedido";
-    bloco.innerHTML = `
-      <legend>Escolha o tamanho</legend>
-      <div class="manto-tamanhos-opcoes">
-        ${["P", "M", "G", "GG", "G1"].map((tamanho) => `<label><input type="radio" name="manto-tamanho" value="${tamanho}"><span>${tamanho}</span></label>`).join("")}
-      </div>
-      <p class="manto-tamanho-erro" aria-live="polite"></p>`;
-    botaoAdicionar.parentElement.insertBefore(bloco, botaoAdicionar);
-
-    const estilo = document.createElement("style");
-    estilo.textContent = ".manto-tamanhos-pedido{margin:16px 0;border:0;padding:0}.manto-tamanhos-pedido legend{font-size:16px;font-weight:700;margin-bottom:10px}.manto-tamanhos-opcoes{display:flex;flex-wrap:wrap;gap:8px}.manto-tamanhos-opcoes label{position:relative;cursor:pointer}.manto-tamanhos-opcoes input{position:absolute;opacity:0}.manto-tamanhos-opcoes span{display:grid;place-items:center;min-width:48px;height:40px;padding:0 10px;border:1px solid #46605f;border-radius:8px;font-weight:700}.manto-tamanhos-opcoes input:checked+span{background:#00e4c3;color:#061919;border-color:#00e4c3}.manto-tamanhos-opcoes input:focus-visible+span{outline:2px solid #fff;outline-offset:2px}.manto-tamanho-erro{min-height:18px;margin:8px 0 0;color:#ffb4aa;font-size:14px}";
-    document.head.appendChild(estilo);
-  };
-
-  new MutationObserver(inserirTamanhos).observe(document.body, { childList: true, subtree: true });
-  inserirTamanhos();
-
-  document.addEventListener("click", (event) => {
-    const botao = event.target.closest("button");
-    if (!botao || !/adicionar ao carrinho/i.test(botao.textContent)) return;
-    const modal = localizarModalPedido();
-    if (!modal || !modal.contains(botao)) return;
-    const tamanho = modal.querySelector("input[name='manto-tamanho']:checked");
-    const erro = modal.querySelector(".manto-tamanho-erro");
-    if (!tamanho) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      erro.textContent = "Escolha um tamanho antes de adicionar ao carrinho.";
-      return;
-    }
-    modal.dataset.tamanhoSelecionado = tamanho.value;
-    erro.textContent = "";
-  }, true);
-});
-
-if (false) document.addEventListener("DOMContentLoaded", () => {
-  const apiFrete = "https://catalogo-mantosagrado00.onrender.com/api/frete";
-  const tamanhoOpcoes = ["P", "M", "G", "GG", "G1"];
-  const style = document.createElement("style");
-  style.textContent = ".manto-zoom{cursor:zoom-in}.manto-modal{position:fixed;inset:0;z-index:9999;display:none;place-items:center;background:#000c;padding:24px}.manto-modal.aberto{display:grid}.manto-modal img{max-width:92vw;max-height:86vh;border-radius:10px}.manto-modal button{position:absolute;top:18px;right:18px;border:0;border-radius:50%;width:42px;height:42px;font-size:26px;cursor:pointer}.manto-tamanho{width:100%;padding:10px;margin:10px 0;border:1px solid #aaa;border-radius:7px;font:inherit}.manto-frete-resultado{margin-top:10px;line-height:1.5}";
-  document.head.appendChild(style);
-  const modal = document.createElement("div");
-  modal.className = "manto-modal";
-  modal.innerHTML = '<button type="button" aria-label="Fechar">×</button><img alt="Imagem ampliada">';
-  document.body.appendChild(modal);
-  const fechar = () => modal.classList.remove("aberto");
-  modal.querySelector("button").onclick = fechar;
-  modal.onclick = (event) => { if (event.target === modal) fechar(); };
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape") fechar(); });
-
-  const aplicarProdutos = () => {
-  const cards = [...document.querySelectorAll(".product-card, .produto-card, .produto, .camisa-card, [data-product], .card")].filter((card) => card.querySelector("img"));
-  cards.forEach((card) => {
-    const image = card.querySelector("img");
-    if (image.dataset.mantoZoom) return;
-    image.dataset.mantoZoom = "true";
-    image.classList.add("manto-zoom");
-    image.addEventListener("click", () => { modal.querySelector("img").src = image.currentSrc || image.src; modal.classList.add("aberto"); });
-    if (!card.querySelector(".manto-tamanho")) {
-      const select = document.createElement("select");
-      select.className = "manto-tamanho";
-      select.setAttribute("aria-label", "Selecione o tamanho");
-      select.innerHTML = '<option value="" selected disabled>Selecione o tamanho</option>' + tamanhoOpcoes.map((item) => `<option value="${item}">${item}</option>`).join("");
-      select.onchange = () => { card.dataset.tamanho = select.value; };
-      const action = card.querySelector("button, a");
-      (action?.parentElement || card).insertBefore(select, action || null);
-    }
-  });
-  };
-  aplicarProdutos();
-  new MutationObserver(aplicarProdutos).observe(document.body, { childList: true, subtree: true });
-
-  const cep = document.querySelector("#cep, #cepDestino, input[name='cep'], input[name='cepDestino']");
-  const botaoFrete = document.querySelector("#calcularFrete, [data-calcular-frete], .calcular-frete");
-  if (!cep) return;
-  const resultado = document.createElement("div");
-  resultado.className = "manto-frete-resultado";
-  resultado.setAttribute("aria-live", "polite");
-  cep.insertAdjacentElement("afterend", resultado);
-  const calcular = async (event) => {
-    event?.preventDefault();
-    const cepDestino = cep.value.replace(/\D/g, "");
-    if (cepDestino.length !== 8) return void (resultado.textContent = "Informe um CEP válido com 8 números.");
-    resultado.textContent = "Calculando frete…";
-    try {
-      const response = await fetch(apiFrete, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ cepDestino }) });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Não foi possível calcular o frete.");
-      const servicos = Array.isArray(data) ? data : (data.services || data.data || []);
-      resultado.innerHTML = servicos.length ? servicos.map((item) => `${item.name || item.service_name || "Entrega"}: <strong>R$ ${Number(item.price || item.total || 0).toFixed(2).replace(".", ",")}</strong>`).join("<br>") : "Nenhuma opção encontrada para este CEP.";
-    } catch (error) { resultado.textContent = error.message || "Não foi possível calcular o frete."; }
-  };
-  if (botaoFrete) botaoFrete.addEventListener("click", calcular);
-  else cep.closest("form")?.addEventListener("submit", calcular);
-});
 // MANTO SAGRADO — CATÁLOGO
 // Dados dos produtos + navegação + carrinho + checkout
 // ============================================================
@@ -1055,6 +911,7 @@ const title = document.getElementById("title");
 
 let carrinho = carregarCarrinho();
 let produtoPendente = null;
+let tamanhoSelecionado = null;
 let freteSelecionado = null;
 let tipoEntrega = "frete";
 
@@ -1067,7 +924,8 @@ function carregarCarrinho() {
         preco: numero(item.preco),
         quantidade: Math.max(1, Number(item.quantidade) || 1),
         personalizada: Boolean(item.personalizada),
-        detalhesPersonalizacao: item.detalhesPersonalizacao || ""
+        detalhesPersonalizacao: item.detalhesPersonalizacao || "",
+        tamanho: item.tamanho || ""
       }))
       .filter(item => Number.isFinite(item.preco));
   } catch {
@@ -1147,6 +1005,7 @@ function atualizarCarrinho() {
       <img src="${item.img}" alt="${escapeHtml(item.nome)}">
       <div class="cart-item-info">
         <h4>${escapeHtml(item.nome)}</h4>
+        <p>Tamanho: <strong>${escapeHtml(item.tamanho || "Não informado")}</strong></p>
         <p>${moeda(item.preco)} cada</p>
         ${item.personalizada
           ? `<span class="custom-badge">Personalizada + R$ 60,00</span>
@@ -1176,16 +1035,14 @@ function escapeHtml(valor) {
 // PERSONALIZAÇÃO
 // =========================
 function adicionarAoCarrinho(nome, preco, img) {
-  produtoPendente = {
-    nome,
-    preco: numero(preco),
-    img
-  };
+  produtoPendente = { nome, preco: numero(preco), img };
+  tamanhoSelecionado = null;
 
   document.querySelector('input[name="customType"][value="lisa"]').checked = true;
   document.getElementById("customDetails").value = "";
+  document.querySelectorAll('input[name="shirtSize"]').forEach(input => input.checked = false);
+  document.getElementById("tamanhoErro").textContent = "";
   toggleCustomFields();
-
   document.getElementById("customModal").style.display = "flex";
 }
 
@@ -1197,20 +1054,26 @@ function toggleCustomFields() {
 function confirmarPersonalizacao() {
   if (!produtoPendente) return;
 
-  const personalizada =
-    document.querySelector('input[name="customType"]:checked').value === "personalizada";
+  const tamanho = document.querySelector('input[name="shirtSize"]:checked')?.value;
+  const tamanhoErro = document.getElementById("tamanhoErro");
+  if (!tamanho) {
+    tamanhoErro.textContent = "Escolha um tamanho antes de continuar.";
+    return;
+  }
+  tamanhoSelecionado = tamanho;
+  tamanhoErro.textContent = "";
 
+  const personalizada = document.querySelector('input[name="customType"]:checked').value === "personalizada";
   const detalhes = document.getElementById("customDetails").value.trim();
-
   if (personalizada && !detalhes) {
     alert("Informe o que deseja personalizar na camisa.");
     return;
   }
 
   const precoFinal = produtoPendente.preco + (personalizada ? 60 : 0);
-
   const existente = carrinho.find(item =>
     item.nome === produtoPendente.nome &&
+    item.tamanho === tamanho &&
     item.personalizada === personalizada &&
     item.detalhesPersonalizacao === detalhes
   );
@@ -1224,6 +1087,7 @@ function confirmarPersonalizacao() {
       precoOriginal: produtoPendente.preco,
       img: produtoPendente.img,
       quantidade: 1,
+      tamanho,
       personalizada,
       detalhesPersonalizacao: detalhes
     });
@@ -1232,14 +1096,12 @@ function confirmarPersonalizacao() {
   fecharPersonalizacao();
   invalidarFrete();
   salvarCarrinho();
-  alert(personalizada
-    ? "Camisa personalizada adicionada! +R$ 60,00."
-    : "Camisa lisa adicionada ao carrinho!");
 }
 
 function fecharPersonalizacao() {
   document.getElementById("customModal").style.display = "none";
   produtoPendente = null;
+  tamanhoSelecionado = null;
 }
 
 function closeCustomOutside(event) {
@@ -1331,79 +1193,76 @@ function mascararCEP(input) {
   input.value = valor;
 }
 
-async function calcularFreteSuperFrete(cepDestino) {
-  const elementoResultado = document.getElementById("resultado-frete");
-  
-  // Limpa o CEP digitado deixando apenas números
-  const cepLimpo = String(cepDestino).replace(/\D/g, '');
+async function calcularFrete() {
+  const cep = document.getElementById("cepDestino").value.replace(/\D/g, "");
+  const status = document.getElementById("freteStatus");
+  const options = document.getElementById("freteOptions");
 
-  if (cepLimpo.length !== 8) {
-    if (elementoResultado) elementoResultado.innerText = "Digite um CEP válido com 8 dígitos.";
+  if (cep.length !== 8) {
+    status.textContent = "Digite um CEP válido com 8 números.";
+    options.innerHTML = "";
+    freteSelecionado = null;
+    atualizarTotais();
     return;
   }
 
-  // Objeto exatamente com a estrutura que a SuperFrete exige
-  const dadosRequisicao = {
-    from: {
-      postal_code: "11900000" // CEP de origem da sua loja
-    },
-    to: {
-      postal_code: cepLimpo  // CEP de destino digitado pelo cliente
-    },
-    services: "1,2,17",     // 1: PAC, 2: SEDEX, 17: Mini Envios
-    package: {
-      weight: 0.3,          // 300 gramas (peso médio de uma camisa)
-      height: 5,            // 5 cm
-      width: 15,            // 15 cm
-      length: 20            // 20 cm
-    },
-    options: {
-      own_hand: false,
-      receipt: false,
-      insurance_value: 0,
-      use_insurance_value: false
-    }
-  };
+  status.textContent = "Calculando frete...";
+  options.innerHTML = "";
+  freteSelecionado = null;
+  atualizarTotais();
 
   try {
-    if (elementoResultado) elementoResultado.innerText = "Calculando frete...";
-
-    const response = await fetch("https://sandbox.superfrete.com/api/v0/calculator", {
+    const response = await fetch(`${CONFIG.API_BASE_URL}/api/frete`, {
       method: "POST",
-      headers: {
-        "accept": "application/json",
-        "content-type": "application/json",
-        "User-Agent": "Manto-Sagrado/00 (amauripcfexdc@gmail.com)",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODkzMzY0MTIsInN1YiI6Ikt5YUJUSW5oa3dadHdERkF1U21CbHVLVk5KSzIifQ.b4jaeX26r4_C_WWKlNZBe3B5GdrvxbwFwNHkdzOlR88"
-      },
-      body: JSON.stringify(dadosRequisicao)
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        cepDestino: cep,
+        quantidade: carrinho.reduce((soma, item) => soma + item.quantidade, 0)
+      })
     });
 
-    if (!response.ok) {
-      throw new Error(`Erro na API: ${response.status}`);
+    const data = await response.json().catch(() => null);
+    if (!response.ok) throw new Error(data?.error || "Não foi possível calcular o frete.");
+
+    const servicos = Array.isArray(data) ? data : (data.services || data.data || []);
+    const validos = servicos.filter(item => !item.error && Number.isFinite(Number(item.price ?? item.total)));
+
+    if (!validos.length) {
+      status.textContent = "Nenhuma opção de frete encontrada para este CEP.";
+      return;
     }
 
-    const data = await response.json();
+    status.textContent = "Escolha uma opção de entrega:";
+    options.innerHTML = validos.map((item, index) => {
+      const price = Number(item.price ?? item.total ?? 0);
+      const name = item.name || item.service_name || item.service || "Entrega";
+      const carrier = item.company?.name || item.company_name || item.carrier || "SuperFrete";
+      const days = item.delivery_time ?? item.deliveryTime ?? item.deadline;
+      const prazo = days ? `${days} dias úteis` : "Prazo conforme transportadora";
+      return `<button type="button" class="frete-option" data-frete-index="${index}">
+        <strong>${escapeHtml(name)} — ${moeda(price)}</strong>
+        <small>${escapeHtml(carrier)} · ${escapeHtml(String(prazo))}</small>
+      </button>`;
+    }).join("");
 
-    // Renderiza o resultado na tela
-    if (elementoResultado) {
-      elementoResultado.innerHTML = "";
-      data.forEach(opcao => {
-        if (!opcao.error) {
-          elementoResultado.innerHTML += `
-            <div class="frete-item">
-              <strong>${escapeHtml(opcao.name)}:</strong> R$ ${opcao.price} (${opcao.delivery_time} dias úteis)
-            </div>
-          `;
-        }
+    options.querySelectorAll(".frete-option").forEach((button, index) => {
+      button.addEventListener("click", () => {
+        options.querySelectorAll(".frete-option").forEach(btn => btn.classList.remove("selected"));
+        button.classList.add("selected");
+        const item = validos[index];
+        freteSelecionado = {
+          price: Number(item.price ?? item.total ?? 0),
+          carrier: item.company?.name || item.company_name || item.carrier || "SuperFrete",
+          service: item.name || item.service_name || item.service || "Entrega",
+          deliveryTime: item.delivery_time ?? item.deliveryTime ?? item.deadline ?? ""
+        };
+        atualizarTotais();
       });
-    }
-
+    });
   } catch (error) {
-    console.error("Erro ao calcular frete:", error);
-    if (elementoResultado) {
-      elementoResultado.innerText = "Erro ao calcular o frete. Verifique o CEP digitado.";
-    }
+    console.error(error);
+    status.textContent = error.message || "Erro ao calcular o frete.";
+    options.innerHTML = "";
   }
 }
 
@@ -1438,6 +1297,7 @@ function finalizarPedido() {
   carrinho.forEach((item, index) => {
     mensagem += `*${index + 1}. ${item.nome}*\n`;
     mensagem += `Quantidade: ${item.quantidade}\n`;
+    mensagem += `Tamanho: ${item.tamanho || "Não informado"}\n`;
     mensagem += `Preço por camisa: ${moeda(item.preco)}\n`;
 
     if (item.personalizada) {

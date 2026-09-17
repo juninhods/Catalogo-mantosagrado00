@@ -58,6 +58,18 @@
       <span><strong>Personalizada + R$ 60,00</strong><small>Informe exatamente o que deseja.</small></span>
     </label>
 
+    <fieldset class="size-picker">
+      <legend>Tamanho da camisa</legend>
+      <div class="size-options">
+        <label><input type="radio" name="shirtSize" value="P"><span>P</span></label>
+        <label><input type="radio" name="shirtSize" value="M"><span>M</span></label>
+        <label><input type="radio" name="shirtSize" value="G"><span>G</span></label>
+        <label><input type="radio" name="shirtSize" value="GG"><span>GG</span></label>
+        <label><input type="radio" name="shirtSize" value="G1"><span>G1</span></label>
+      </div>
+      <p id="tamanhoErro" class="field-error" aria-live="polite"></p>
+    </fieldset>
+
     <div id="customFields" class="hidden">
       <label for="customDetails">O que deseja personalizar?</label>
       <textarea id="customDetails" rows="4" placeholder="Ex.: Nome: Lamine Yamal | Número: 10"></textarea>
