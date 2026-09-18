@@ -1011,7 +1011,7 @@ function atualizarCarrinho() {
         ${item.personalizada
           ? `<span class="custom-badge">Personalizada + R$ 60,00</span>
              <p class="help">${escapeHtml(item.detalhesPersonalizacao)}</p>`
-          : `<span class="custom-badge">Camisa lisa</span>`}
+          : `<span class="custom-badge">Camisa Lisa</span>`}
         <div class="quantity">
           <button onclick="alterarQuantidade(${index}, -1)">−</button>
           <strong>${item.quantidade}</strong>
@@ -1108,7 +1108,7 @@ function confirmarPersonalizacao() {
   salvarCarrinho();
   alert(personalizada
     ? `Camisa personalizada tamanho ${tamanho} adicionada! +R$ 60,00.`
-    : `Camisa lisa tamanho ${tamanho} adicionada ao carrinho!`);
+    : `Camisa Lisa tamanho ${tamanho} adicionada ao carrinho!`);
 }
 
 function fecharPersonalizacao() {
@@ -1332,7 +1332,7 @@ function finalizarPedido() {
       mensagem += `Personalização: *SIM (+R$ 60,00)*\n`;
       mensagem += `Detalhes: ${item.detalhesPersonalizacao}\n`;
     } else {
-      mensagem += "Personalização: Não — camisa lisa\n";
+      mensagem += "Personalização: Não — camisa Lisa\n";
     }
 
     mensagem += `Subtotal do item: ${moeda(
