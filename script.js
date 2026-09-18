@@ -881,7 +881,7 @@ const CONFIG = {
   API_BASE_URL:
     (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
       ? ""
-      : "", 
+      : "https://catalogo-mantosagrado00.onrender.com", 
 
   PRODUTO_FRETE: {
     pesoKg: 0.35,
@@ -897,7 +897,8 @@ const CONFIG = {
     "Registro-SP — local a combinar",
     "Pariquera-Açu — local a combinar",
     "Eldorado — local a combinar",
-    "Jacupiranga — local a combinar"
+    "Jacupiranga — local a combinar",
+    "Cajati — local a combinar"
   ]
 };
 const camisasMaisVendidas = [
@@ -1383,15 +1384,17 @@ function showPaises() {
     const precoNumerico = numero(camisa.preco);
 
     div.innerHTML = `
-      <div class="zoom-container" onclick="event.stopPropagation(); openModal(${JSON.stringify(camisa.img)})">
-        <img src="${camisa.img}" alt="${escapeHtml(camisa.nome)}">
-      </div>
-      <h3>${escapeHtml(camisa.nome)}</h3>
-      <p>${moeda(precoNumerico)}</p>
-      <button onclick='event.stopPropagation(); adicionarAoCarrinho(${JSON.stringify(camisa.nome)}, ${precoNumerico}, ${JSON.stringify(camisa.img)})'>
-        Adicionar ao carrinho
-      </button>
-    `;
+  <div class="zoom-container" onclick="openModal(${JSON.stringify(camisa.img)})">
+    <img src="${camisa.img}" alt="${escapeHtml(camisa.nome)}">
+  </div>
+
+  <h3>${escapeHtml(camisa.nome)}</h3>
+  <p>${moeda(precoNumerico)}</p>
+
+  <button onclick='adicionarAoCarrinho(${JSON.stringify(camisa.nome)}, ${precoNumerico}, ${JSON.stringify(camisa.img)})'>
+    Adicionar ao carrinho
+  </button>
+`;
 
     destaques.appendChild(div);
   });
@@ -1452,16 +1455,16 @@ function showCamisas(pais, liga, time) {
     const div = document.createElement("div");
     div.className = "shirt";
 
-    div.innerHTML = `
-      <div class="zoom-container" onclick="openModal(${JSON.stringify(camisa.img)})">
-        <img src="${camisa.img}" alt="${escapeHtml(camisa.nome)}">
-      </div>
-      <h3>${escapeHtml(camisa.nome)}</h3>
-      <p>${moeda(precoNumerico)}</p>
-      <button onclick='adicionarAoCarrinho(${JSON.stringify(camisa.nome)}, ${precoNumerico}, ${JSON.stringify(camisa.img)})'>
-        Adicionar ao carrinho
-      </button>
-    `;
+   div.innerHTML = `
+  <div class="zoom-container" onclick="openModal('${camisa.img}')">
+    <img src="${camisa.img}" alt="${camisa.nome}">
+  </div>
+  <h3>${camisa.nome}</h3>
+  <p>${moeda(numero(camisa.preco))}</p>
+  <button onclick='adicionarAoCarrinho(${JSON.stringify(camisa.nome)}, ${precoNumerico}, ${JSON.stringify(camisa.img)})'>
+    Adicionar ao carrinho
+  </button>
+`;
 
     content.appendChild(div);
   });
@@ -1478,7 +1481,6 @@ function openModal(img) {
 function closeModal() {
   document.getElementById("imageModal").style.display = "none";
 }
-
 function aceitarCookies() {
   localStorage.setItem("mantoSagradoCookies", "aceitos");
   document.getElementById("cookieBanner").style.display = "none";
