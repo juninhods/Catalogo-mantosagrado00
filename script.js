@@ -872,16 +872,14 @@ const WHATSAPP_LOJA = "5513997970308";
 // CONFIGURAÇÕES
 // =========================
 const CONFIG = {
-  // 1. CEP de Origem Válido (digite um CEP real onde os produtos são postados)
   CEP_ORIGEM: "11900-000",
 
-  // 2. URL do seu backend hospedado (ex: Render, Railway, etc.)
-  // ATENÇÃO: Se estiver testando localmente, use "http://localhost:3000".
-  // Em produção, insira a URL pública completa do seu backend.
   API_BASE_URL:
-    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    (window.location.hostname === "localhost" ||
+     window.location.hostname === "127.0.0.1")
       ? ""
-      : "https://catalogo-mantosagrado00.onrender.com", 
+      : "https://catalogo-mantosagrado00.onrender.com",
+
 
   PRODUTO_FRETE: {
     pesoKg: 0.35,
