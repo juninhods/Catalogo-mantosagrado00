@@ -553,3 +553,110 @@ textarea { resize: vertical; }
 
 /* Tamanhos */
 .size-section{margin:18px 0}.size-title{display:block;font-weight:700;margin-bottom:10px}.size-options{display:flex;flex-wrap:wrap;gap:10px}.size-option{position:relative;cursor:pointer}.size-option input{position:absolute;opacity:0;pointer-events:none}.size-option span{display:flex;align-items:center;justify-content:center;min-width:52px;height:42px;padding:0 12px;border:2px solid #4b5b5c;border-radius:8px;font-weight:700;background:#101b1d;color:#fff;transition:.2s}.size-option:hover span{border-color:#00e4c3}.size-option input:checked+span{background:#00e4c3;border-color:#00e4c3;color:#061919}.size-error{min-height:20px;margin-top:8px;color:#ff8f8f;font-size:14px;font-weight:600}.cart-size{margin:4px 0;font-size:14px}
+
+/* =========================
+   DADOS DE ENTREGA
+========================= */
+
+.dados-entrega {
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #f8f8f8;
+  border: 1px solid #e5e5e5;
+}
+
+.dados-entrega h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.subtitulo-entrega {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: #777;
+}
+
+.campo-entrega {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.campo-entrega label {
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.campo-entrega label span {
+  font-weight: normal;
+  color: #888;
+}
+
+.campo-entrega input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 13px;
+  border: 1px solid #d5d5d5;
+  border-radius: 9px;
+  background: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.campo-entrega input:focus {
+  border-color: #111;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
+}
+
+.linha-entrega {
+  display: flex;
+  gap: 12px;
+}
+
+.numero-campo {
+  width: 30%;
+}
+
+.complemento-campo {
+  width: 70%;
+}
+
+.btn-calcular-frete {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 9px;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-calcular-frete:hover {
+  opacity: 0.88;
+}
+
+#freteStatus {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+#freteOptions {
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .dados-entrega {
+    padding: 16px;
+  }
+
+  .linha-entrega {
+    gap: 8px;
+  }
+}

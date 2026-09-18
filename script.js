@@ -1532,5 +1532,24 @@ if (listaLocais) {
     .join("");
 }
 
+// Máscara automática do CEP: 00000-000
+const cepInput = document.getElementById("cepDestino");
+
+if (cepInput) {
+  cepInput.addEventListener("input", function () {
+    let cep = this.value.replace(/\D/g, "");
+
+    if (cep.length > 8) {
+      cep = cep.substring(0, 8);
+    }
+
+    if (cep.length > 5) {
+      cep = cep.substring(0, 5) + "-" + cep.substring(5);
+    }
+
+    this.value = cep;
+  });
+}
+
 showPaises();
 atualizarCarrinho();

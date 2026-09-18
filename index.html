@@ -103,42 +103,59 @@
       </label>
     </div>
 
-   <div id="freteFields">
-  <label for="cepDestino">CEP:</label>
-  <input
-    type="text"
-    id="cepDestino"
-    placeholder="00000-000"
-    maxlength="9"
-  >
+   <div id="freteFields" class="dados-entrega">
 
-  <label for="enderecoDestino">Endereço:</label>
-  <input
-    type="text"
-    id="enderecoDestino"
-    placeholder="Rua, Avenida..."
-  >
+  <h3>📦 Dados para entrega</h3>
+  <p class="subtitulo-entrega">Preencha os dados abaixo para calcular o frete.</p>
 
-  <label for="numeroDestino">Número:</label>
-  <input
-    type="text"
-    id="numeroDestino"
-    placeholder="Número"
-  >
+  <div class="campo-entrega">
+    <label for="cepDestino">CEP</label>
+    <input
+      type="text"
+      id="cepDestino"
+      placeholder="00000-000"
+      maxlength="9"
+      inputmode="numeric"
+    >
+  </div>
 
-  <label for="complementoDestino">Complemento:</label>
-  <input
-    type="text"
-    id="complementoDestino"
-    placeholder="Apartamento, bloco, casa..."
-  >
+  <div class="campo-entrega">
+    <label for="enderecoDestino">Endereço</label>
+    <input
+      type="text"
+      id="enderecoDestino"
+      placeholder="Rua, Avenida..."
+    >
+  </div>
 
-  <button type="button" onclick="calcularFrete()">
+  <div class="linha-entrega">
+    <div class="campo-entrega numero-campo">
+      <label for="numeroDestino">Número</label>
+      <input
+        type="text"
+        id="numeroDestino"
+        placeholder="Nº"
+        inputmode="numeric"
+      >
+    </div>
+
+    <div class="campo-entrega complemento-campo">
+      <label for="complementoDestino">Complemento <span>(opcional)</span></label>
+      <input
+        type="text"
+        id="complementoDestino"
+        placeholder="Apto, bloco, casa..."
+      >
+    </div>
+  </div>
+
+  <button type="button" onclick="calcularFrete()" class="btn-calcular-frete">
     Calcular frete
   </button>
 
   <div id="freteStatus"></div>
   <div id="freteOptions"></div>
+
 </div>
     <div id="combinarFields" class="hidden">
       <label for="localEntrega">Local para combinar a entrega</label>
