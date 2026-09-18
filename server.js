@@ -50,9 +50,9 @@ app.post("/api/frete", async (req, res) => {
         Authorization: `Bearer ${SUPERFRETE_TOKEN}`,
       },
       body: JSON.stringify({
-        from: { postal_code: "01153000" },
+        from: { postal_code: "11900000" },
         to: { postal_code: cepDestino },
-        services: "1,2,17",
+        services: "1,2,17,3,33,31",
         package: { weight: 0.3, height: 5, width: 15, length: 20 },
         options: { own_hand: false, receipt: false, insurance_value: 0, use_insurance_value: false },
       }),

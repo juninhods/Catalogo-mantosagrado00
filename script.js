@@ -1166,6 +1166,9 @@ function abrirCheckout() {
 
   document.querySelector('input[name="deliveryType"][value="frete"]').checked = true;
   document.getElementById("cepDestino").value = "";
+  document.getElementById("enderecoDestino").value = "";
+  document.getElementById("numeroDestino").value = "";
+  document.getElementById("complementoDestino").value = "";
   document.getElementById("localEntrega").value = "";
   document.getElementById("freteOptions").innerHTML = "";
   document.getElementById("freteStatus").innerText = "";
@@ -1297,8 +1300,17 @@ function finalizarPedido() {
 
   if (tipoEntrega === "combinar") {
     const local = document.getElementById("localEntrega").value.trim();
+
     if (!local) {
       alert("Informe o local próximo onde deseja combinar a entrega.");
+      return;
+    }
+  } else {
+    const endereco = document.getElementById("enderecoDestino").value.trim();
+    const numero = document.getElementById("numeroDestino").value.trim();
+
+    if (!endereco || !numero) {
+      alert("Informe o endereço e o número para finalizar o pedido.");
       return;
     }
   }
@@ -1307,7 +1319,8 @@ function finalizarPedido() {
   const frete = freteSelecionado?.price || 0;
   const total = subtotal + frete;
 
-  let mensagem = "Olá! Quero fazer um pedido pelo catálogo da *Manto Sagrado*.\n\n";
+  let mensagem =
+    "Olá! Quero fazer um pedido pelo catálogo da *Manto Sagrado*.\n\n";
 
   carrinho.forEach((item, index) => {
     mensagem += `*${index + 1}. ${item.nome}*\n`;
@@ -1322,14 +1335,18 @@ function finalizarPedido() {
       mensagem += "Personalização: Não — camisa lisa\n";
     }
 
-    mensagem += `Subtotal do item: ${moeda(item.preco * item.quantidade)}\n\n`;
+    mensagem += `Subtotal do item: ${moeda(
+      item.preco * item.quantidade
+    )}\n\n`;
   });
 
   mensagem += `*Subtotal dos produtos:* ${moeda(subtotal)}\n`;
 
   if (tipoEntrega === "combinar") {
     mensagem += "*Entrega:* Combinar entrega em mãos\n";
-    mensagem += `*Local sugerido:* ${document.getElementById("localEntrega").value.trim()}\n`;
+    mensagem += `*Local sugerido:* ${
+      document.getElementById("localEntrega").value.trim()
+    }\n`;
     mensagem += "*Frete:* R$ 0,00\n";
   } else {
     mensagem += `*Transportadora:* ${freteSelecionado.carrier}\n`;
@@ -1340,13 +1357,32 @@ function finalizarPedido() {
       mensagem += `*Prazo estimado:* ${freteSelecionado.deliveryTime}\n`;
     }
 
-    mensagem += `*CEP de destino:* ${document.getElementById("cepDestino").value}\n`;
+    mensagem += `*CEP de destino:* ${
+      document.getElementById("cepDestino").value
+    }\n`;
+
+    mensagem += `*Endereço:* ${
+      document.getElementById("enderecoDestino").value.trim()
+    }\n`;
+
+    mensagem += `*Número:* ${
+      document.getElementById("numeroDestino").value.trim()
+    }\n`;
+
+    const complemento =
+      document.getElementById("complementoDestino").value.trim();
+
+    if (complemento) {
+      mensagem += `*Complemento:* ${complemento}\n`;
+    }
   }
 
   mensagem += `\n*TOTAL DO PEDIDO:* ${moeda(total)}\n\n`;
   mensagem += "Gostaria de confirmar o pedido e combinar o pagamento.";
 
-  const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(mensagem)}`;
+  const url =
+    `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(mensagem)}`;
+
   window.open(url, "_blank");
 }
 
