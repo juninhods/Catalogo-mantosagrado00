@@ -1,1 +1,1 @@
-todos os direitos reservados
+Copyright (c) 2026 Amauri Junior

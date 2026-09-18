@@ -898,7 +898,7 @@ const CONFIG = {
     "Pariquera-Açu — local a combinar",
     "Eldorado — local a combinar",
     "Jacupiranga — local a combinar",
-    "Cajati — local a combinar"
+    "Cajati — local a combinar",
   ]
 };
 const camisasMaisVendidas = [
