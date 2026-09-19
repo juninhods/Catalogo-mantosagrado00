@@ -1169,6 +1169,8 @@ function abrirCheckout() {
   document.getElementById("enderecoDestino").value = "";
   document.getElementById("numeroDestino").value = "";
   document.getElementById("complementoDestino").value = "";
+  document.getElementById("bairroDestino").value = "";
+  document.getElementById("cidadeDestino").value = "";
   document.getElementById("localEntrega").value = "";
   document.getElementById("freteOptions").innerHTML = "";
   document.getElementById("freteStatus").innerText = "";
@@ -1206,6 +1208,50 @@ function mascararCEP(input) {
   let valor = input.value.replace(/\D/g, "").slice(0, 8);
   if (valor.length > 5) valor = valor.slice(0,5) + "-" + valor.slice(5);
   input.value = valor;
+}
+
+// =========================
+// BUSCAR ENDEREÇO PELO CEP
+// =========================
+
+async function buscarEnderecoPorCEP(cep) {
+  const cepLimpo = String(cep || "").replace(/\D/g, "");
+
+  const bairro = document.getElementById("bairroDestino");
+  const cidade = document.getElementById("cidadeDestino");
+
+  if (!bairro || !cidade) return;
+
+  if (cepLimpo.length !== 8) {
+    bairro.value = "";
+    cidade.value = "";
+    return;
+  }
+
+  bairro.value = "Buscando...";
+  cidade.value = "Buscando...";
+
+  try {
+    const response = await fetch(
+      `https://viacep.com.br/ws/${cepLimpo}/json/`
+    );
+
+    const data = await response.json();
+
+    if (data.erro) {
+      bairro.value = "";
+      cidade.value = "";
+      return;
+    }
+
+    bairro.value = data.bairro || "";
+    cidade.value = data.localidade || "";
+
+  } catch (error) {
+    console.error("Erro ao consultar CEP:", error);
+    bairro.value = "";
+    cidade.value = "";
+  }
 }
 
 async function calcularFreteSuperFrete(cepDestino) {
@@ -1363,6 +1409,14 @@ function finalizarPedido() {
 
     mensagem += `*Endereço:* ${
       document.getElementById("enderecoDestino").value.trim()
+    }\n`;
+   
+    mensagem += `*Bairro:* ${
+  document.getElementById("bairroDestino").value.trim()
+    }\n`;
+
+    mensagem += `*Cidade:* ${
+  document.getElementById("cidadeDestino").value.trim()
     }\n`;
 
     mensagem += `*Número:* ${
@@ -1532,22 +1586,21 @@ if (listaLocais) {
     .join("");
 }
 
-// Máscara automática do CEP: 00000-000
+// =========================
+// MÁSCARA + CONSULTA DO CEP
+// =========================
+
 const cepInput = document.getElementById("cepDestino");
 
 if (cepInput) {
   cepInput.addEventListener("input", function () {
-    let cep = this.value.replace(/\D/g, "");
+    mascararCEP(this);
 
-    if (cep.length > 8) {
-      cep = cep.substring(0, 8);
+    const cepLimpo = this.value.replace(/\D/g, "");
+
+    if (cepLimpo.length === 8) {
+      buscarEnderecoPorCEP(cepLimpo);
     }
-
-    if (cep.length > 5) {
-      cep = cep.substring(0, 5) + "-" + cep.substring(5);
-    }
-
-    this.value = cep;
   });
 }
 
