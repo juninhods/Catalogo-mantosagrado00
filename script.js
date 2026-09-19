@@ -1478,19 +1478,37 @@ function showPaises() {
     const div = document.createElement("div");
     div.className = "shirt best-card";
     const precoNumerico = numero(camisa.preco);
-
-    div.innerHTML = `
-  <div class="zoom-container" onclick="openModal(${JSON.stringify(camisa.img)})">
+div.innerHTML = `
+  <div class="zoom-container destaque-img">
     <img src="${camisa.img}" alt="${escapeHtml(camisa.nome)}">
   </div>
 
   <h3>${escapeHtml(camisa.nome)}</h3>
   <p>${moeda(precoNumerico)}</p>
 
-  <button onclick='adicionarAoCarrinho(${JSON.stringify(camisa.nome)}, ${precoNumerico}, ${JSON.stringify(camisa.img)})'>
+  <button class="btn-destaque">
     Adicionar ao carrinho
   </button>
 `;
+
+const imagemDestaque = div.querySelector(".destaque-img");
+
+imagemDestaque.addEventListener("click", function (event) {
+  event.stopPropagation();
+  openModal(camisa.img);
+});
+
+const botaoDestaque = div.querySelector(".btn-destaque");
+
+botaoDestaque.addEventListener("click", function (event) {
+  event.stopPropagation();
+
+  adicionarAoCarrinho(
+    camisa.nome,
+    precoNumerico,
+    camisa.img
+  );
+});
 
     destaques.appendChild(div);
   });
