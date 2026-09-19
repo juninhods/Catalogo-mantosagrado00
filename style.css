@@ -731,3 +731,25 @@ textarea { resize: vertical; }
     width: 50%;
   }
 }
+
+/* =========================
+   ZOOM - CAMISAS + VENDIDAS
+========================= */
+
+.best-sellers .zoom-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: zoom-in;
+}
+
+.best-sellers .zoom-container img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.best-sellers .zoom-container:hover img {
+  transform: scale(1.5);
+}
