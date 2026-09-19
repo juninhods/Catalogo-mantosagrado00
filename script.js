@@ -1239,13 +1239,21 @@ async function buscarEnderecoPorCEP(cep) {
     const data = await response.json();
 
     if (data.erro) {
-      bairro.value = "";
-      cidade.value = "";
-      return;
-    }
+  bairro.value = "";
+  cidade.value = "";
+  bairro.placeholder = "Digite o bairro";
+  cidade.placeholder = "Cidade não encontrada";
+  return;
+}
 
-    bairro.value = data.bairro || "";
-    cidade.value = data.localidade || "";
+bairro.value = data.bairro || "";
+cidade.value = data.localidade || "";
+
+if (!data.bairro) {
+  bairro.placeholder = "Digite o bairro";
+} else {
+  bairro.placeholder = "Bairro";
+}
 
   } catch (error) {
     console.error("Erro ao consultar CEP:", error);
