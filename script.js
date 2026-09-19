@@ -41,6 +41,7 @@ const data = {
               { nome: "Palmeiras Home 2026 (Feminina)", preco: "R$ 130", img: "imagens/camisas/pal-homef26.jpg" },
               { nome: "Palmeiras Away 2026 (Torcedor)", preco: "R$ 130", img: "imagens/camisas/pal-away26.jpg" },
               { nome: "Palmeiras Away 2026 (Feminina)", preco: "R$ 130", img: "imagens/camisas/pal-awayf26.jpg" },
+              { nome: "Palmeiras Three (Torcedor)", preco: "R$ 140", img: "imagens/camisas/pal-three26.jpg" },
               { nome: "Palmeiras Avanti Palestra (Torcedor)", preco: "R$ 140", img: "imagens/camisas/pal-avanti2025.jpg" },
               { nome: "Palmeiras 1996 Retrô (Torcedor)", preco: "R$ 150", img: "imagens/camisas/pal-rto96.jpg" }
             
@@ -92,8 +93,8 @@ const data = {
             img: "imagens/times/botafogo.png",
             camisas: [
               { nome: "Botafogo Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bota-home26.jpg" },
-              { nome: "Botafogo  Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bota-away25.jpg" },
-               { nome: "Botafogo  Third 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bota-third25.jpg" }
+              { nome: "Botafogo Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bota-away26.jpg" },
+              { nome: "Botafogo Three 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bota-three26.jpg" }
             ]
           },
           "Cruzeiro": {
@@ -173,6 +174,7 @@ const data = {
             camisas: [
               { nome: "Manchester United Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/united-home26.jpg" },
               { nome: "Manchester United Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/united-away26.jpg" },
+              { nome: "Manchester United three 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/united-three26.jpg" },
               { nome: "Manchester United Home 2007/08 Retrô (Torcedor)", preco: "R$ 150", img: "imagens/camisas/united-rto0708.jpg" },
               { nome: "Manchester United Away 2007/08 Retrô (Torcedor)", preco: "R$ 150", img: "imagens/camisas/united-rto0708awy.jpg" }
             ]
@@ -192,6 +194,8 @@ const data = {
             img: "imagens/times/chelsea.png",
             camisas: [
               { nome: "Chelsea Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/chelsea-home26.jpg" },
+              { nome: "Chelsea Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/chelsea-away26.jpg" },
+              { nome: "Chelsea Three 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/chelsea-three26.jpg" },
               { nome: "Chelsea Home 11/12 Retrô (Torcedor)", preco: "R$ 150", img: "imagens/camisas/chelsea-2012.jpg" },
               
             ]
@@ -199,7 +203,7 @@ const data = {
            "Tottenham": {
             img: "imagens/times/spurs.png",
             camisas: [
-              { nome: "Tottenham Home 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/spurs-home25.jpg" },
+              { nome: "Tottenham Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/spurs-home25.jpg" },
               { nome: "Tottenham Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/spurs-away25.jpg" },
               
             ]
@@ -231,8 +235,8 @@ const data = {
            "Aston Villa": {
             img: "imagens/times/aston.png",
             camisas: [
-              { nome: "Aston Villa Home 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/aston-home25.jpg" },
-              { nome: "Aston Villa Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/aston-away25.jpg" },
+              { nome: "Aston Villa Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/aston-home25.jpg" },
+              { nome: "Aston Villa Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/aston-away25.jpg" },
               ]
           },
 
@@ -280,7 +284,8 @@ const data = {
           "Atlético De Madrid": {
             img: "imagens/times/madrid.png",
             camisas: [
-               { nome: "Atlético De Madrid Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/madrid-home26.jpg" },
+              { nome: "Atlético De Madrid Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/madrid-home26.jpg" },
+              { nome: "Atlético De Madrid Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/madrid-away26.jpg" },
               { nome: "Atlético De Madrid Home 2017 Retrô (Torcedor)", preco: "R$ 150", img: "imagens/camisas/madrid-rto17.jpg" }
             ]
           },
@@ -333,8 +338,8 @@ const data = {
            "Roma": {
             img: "imagens/times/roma.png",
             camisas: [
-              { nome: "Roma Home 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/roma-home25.jpg" },
-              { nome: "Roma Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/roma-away25.jpg" },
+              { nome: "Roma Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/roma-home26.jpg" },
+              { nome: "Roma Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/roma-away26.jpg" },
              
 
             ]
@@ -342,8 +347,8 @@ const data = {
            "Napoli": {
             img: "imagens/times/napoli.png",
             camisas: [
-              { nome: "Napoli Home 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/nap-home26.jpg" },
-              { nome: "Napoli Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/nap-away26.jpg" },
+              { nome: "Napoli Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/nap-home26.jpg" },
+              { nome: "Napoli Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/nap-away26.jpg" },
               { nome: "Napoli Away  Special Edition 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/nap-edt251.jpg" },
               { nome: "Napoli Away  Special Edition 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/nap-edt252.jpg" },
              
@@ -353,8 +358,8 @@ const data = {
           "Lazio": {
             img: "imagens/times/lazio.png",
             camisas: [
-              { nome: "Lazio Home 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/laz-home25.jpg" },
-              { nome: "Lazio Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/laz-away25.jpg" },
+              { nome: "Lazio Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/laz-home25.jpg" },
+              { nome: "Lazio Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/laz-away25.jpg" },
               { nome: "Lazio Home  99/00 Retrô (Torcedor)", preco: "R$ 150", img: "imagens/camisas/laz-rto00.jpg" },
               { nome: "Lazio Away  99/00 Retrô (Torcedor)", preco: "R$ 150", img: "imagens/camisas/laz-rto99.jpg" },
              
@@ -384,8 +389,8 @@ const data = {
           "Borussia Dortmund": {
             img: "imagens/times/bvb.png",
             camisas: [
-              { nome: "Borussia Dortmund Home 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bvb-home25.jpg" },
-              { nome: "Borussia Dortmund Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bvb-away25.jpg" },
+              { nome: "Borussia Dortmund Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bvb-home25.jpg" },
+              { nome: "Borussia Dortmund Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/bvb-away25.jpg" },
              
             ]
           },
@@ -504,8 +509,8 @@ const data = {
           "Al Nassr": {
             img: "imagens/times/alnassr.png",
             camisas: [
-              { nome: "Al Nassr Home 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/alnassr-home25.jpg" },
-              { nome: "Al Nassr Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/alnassr-away25.jpg" }
+              { nome: "Al Nassr Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/alnassr-home25.jpg" },
+              { nome: "Al Nassr Away 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/alnassr-away25.jpg" }
             ]
           },
            "Al Hilal": {
