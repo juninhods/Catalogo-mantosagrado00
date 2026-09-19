@@ -473,7 +473,7 @@ const data = {
           "Porto": {
             img: "imagens/times/porto.png",
             camisas: [
-              { nome: "Porto Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/porto_home26.jpg" },
+              { nome: "Porto Home 2026 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/porto-home26.jpg" },
               { nome: "Porto Home 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/porto_home25.jpg" },
               { nome: "Porto Away 2025 (Torcedor)", preco: "R$ 120", img: "imagens/camisas/porto_away25.jpg" }
 
@@ -612,7 +612,7 @@ const data = {
     img: "imagens/paises/japao.png",
     ligas: {
       "J League": {
-        img: "imagens/ligas/Jleague.png",
+        img: "imagens/ligas/jleague.png",
         times: {
           "Yokohama Marinos": {
             img: "imagens/times/yoko.png",
