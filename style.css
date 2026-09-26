@@ -766,6 +766,10 @@ textarea { resize: vertical; }
   margin-top: 12px;
 }
 
+/* =========================
+   NEON NAS OPÇÕES DE FRETE
+   ========================= */
+
 .frete-choice {
   display: flex;
   align-items: flex-start;
@@ -778,17 +782,39 @@ textarea { resize: vertical; }
   background: rgba(255,255,255,.06);
   color: #fff;
   cursor: pointer;
-  transition: .2s;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
+/* Ao passar o mouse */
 .frete-choice:hover {
   border-color: #00ffcc;
-  background: rgba(0,255,204,.08);
+  background: rgba(0,255,204,.06);
+  box-shadow:
+    0 0 7px rgba(0,255,204,.35),
+    0 0 15px rgba(0,255,204,.15);
 }
 
+/* Radio */
 .frete-choice input {
   margin-top: 4px;
   accent-color: #00ffcc;
+}
+
+/* Frete selecionado */
+.frete-choice:has(input:checked) {
+  border-color: #00ffcc;
+  background: rgba(0,255,204,.08);
+
+  box-shadow:
+    0 0 5px rgba(0,255,204,.65),
+    0 0 12px rgba(0,255,204,.40),
+    0 0 22px rgba(0,255,204,.18);
+
+  animation: freteNeon 1.8s ease-in-out infinite;
 }
 
 .frete-choice span {
@@ -805,18 +831,18 @@ textarea { resize: vertical; }
   color: #aaa;
 }
 
-@media (max-width: 600px) {
-  .dados-entrega {
-    padding: 16px;
+/* Pulsação suave do neon */
+@keyframes freteNeon {
+  0%, 100% {
+    box-shadow:
+      0 0 4px rgba(0,255,204,.45),
+      0 0 10px rgba(0,255,204,.22);
   }
 
-  .linha-entrega {
-    gap: 8px;
-  }
-
-  .bairro-campo,
-  .cidade-campo {
-    width: 50%;
+  50% {
+    box-shadow:
+      0 0 7px rgba(0,255,204,.75),
+      0 0 18px rgba(0,255,204,.40);
   }
 }
 
