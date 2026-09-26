@@ -883,7 +883,7 @@ const CONFIG = {
     (window.location.hostname === "localhost" ||
      window.location.hostname === "127.0.0.1")
       ? ""
-      : "https://catalogo-mantosagrado00.onrender.com",
+      : "https://catalogo-mantosagrado01.onrender.com",
 
 
   PRODUTO_FRETE: {
