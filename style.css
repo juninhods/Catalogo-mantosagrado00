@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -550,6 +551,97 @@ textarea { resize: vertical; }
 }
 
 
+/* Tamanhos */
+/* =========================
+   TAMANHOS - NEON
+   Mantém o layout original
+========================= */
+.size-section {
+  margin: 18px 0;
+}
+
+.size-title {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.size-option {
+  position: relative;
+  cursor: pointer;
+  display: block;
+  margin: 0 !important;
+}
+
+.size-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.size-option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  height: 42px;
+  padding: 0 12px;
+  border: 2px solid #4b5b5c;
+  border-radius: 8px;
+  font-weight: 700;
+  background: #101b1d;
+  color: #fff;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.size-option:hover span {
+  border-color: #00ffcc;
+  box-shadow: 0 0 8px rgba(0, 255, 204, 0.35);
+}
+
+.size-option input:checked + span {
+  background: #101b1d;
+  border-color: #00ffcc;
+  color: #fff;
+  box-shadow:
+    0 0 5px #00ffcc,
+    0 0 12px rgba(0, 255, 204, 0.45),
+    0 0 22px rgba(0, 255, 204, 0.20);
+  animation: tamanhoNeon 1.8s ease-in-out infinite;
+}
+
+@keyframes tamanhoNeon {
+  0%, 100% {
+    box-shadow:
+      0 0 4px rgba(0, 255, 204, 0.45),
+      0 0 10px rgba(0, 255, 204, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 7px rgba(0, 255, 204, 0.75),
+      0 0 18px rgba(0, 255, 204, 0.40);
+  }
+}
+
+.size-error {
+  min-height: 20px;
+  margin-top: 8px;
+  color: #ff8f8f;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cart-size {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
 /* =========================
    DADOS DE ENTREGA
 ========================= */
@@ -749,353 +841,3 @@ textarea { resize: vertical; }
 .best-sellers .zoom-container:hover img {
   transform: scale(1.5);
 }
-
-
-/* =========================================================
-   NEON CONTROLS - MANTO SAGRADO
-   Adaptado para manter a paleta original #00ffcc
-   e funcionar com os radios já existentes.
-   ========================================================= */
-
-/* ---------- OPÇÕES: LISA / PERSONALIZADA ---------- */
-
-.choice,
-.delivery-choice {
-  position: relative;
-  overflow: visible;
-  transition:
-    border-color .3s ease,
-    background .3s ease,
-    box-shadow .3s ease,
-    transform .2s ease;
-}
-
-.choice input,
-.delivery-choice input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Indicador neon no lugar do radio padrão */
-.choice::before,
-.delivery-choice::before {
-  content: "";
-  flex: 0 0 22px;
-  width: 22px;
-  height: 22px;
-  margin-top: 1px;
-  border: 2px solid #4b5b5c;
-  border-radius: 5px;
-  background: #101b1d;
-  box-sizing: border-box;
-  transition:
-    border-color .3s ease,
-    background .3s ease,
-    box-shadow .3s ease,
-    transform .25s ease;
-}
-
-.choice:hover,
-.delivery-choice:hover {
-  border-color: rgba(0,255,204,.65);
-  box-shadow: 0 0 12px rgba(0,255,204,.10);
-}
-
-.choice:hover::before,
-.delivery-choice:hover::before {
-  border-color: #00ffcc;
-  transform: scale(1.05);
-}
-
-/* Check neon */
-.choice:has(input:checked)::before,
-.delivery-choice:has(input:checked)::before {
-  content: "✓";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,255,204,.12);
-  border-color: #00ffcc;
-  color: #00ffcc;
-  font-size: 14px;
-  font-weight: 900;
-  box-shadow:
-    0 0 5px rgba(0,255,204,.75),
-    0 0 14px rgba(0,255,204,.35),
-    inset 0 0 8px rgba(0,255,204,.12);
-  animation: mantoNeonCheck .25s ease-out;
-}
-
-.choice:has(input:checked),
-.delivery-choice:has(input:checked) {
-  border-color: rgba(0,255,204,.65);
-  background: rgba(0,255,204,.055);
-  box-shadow:
-    0 0 8px rgba(0,255,204,.10),
-    inset 0 0 18px rgba(0,255,204,.025);
-}
-
-/* Brilho animado nas opções selecionadas */
-.choice:has(input:checked)::after,
-.delivery-choice:has(input:checked)::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: 12px;
-  pointer-events: none;
-  opacity: .45;
-  box-shadow:
-    0 0 7px rgba(0,255,204,.35),
-    0 0 18px rgba(0,255,204,.12);
-  animation: mantoNeonPulse 1.8s ease-in-out infinite;
-}
-
-
-/* ---------- TAMANHOS P / M / G / GG / G1 ---------- */
-
-.size-option {
-  position: relative;
-  cursor: pointer;
-}
-
-.size-option input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.size-option span {
-  position: relative;
-  overflow: visible;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 52px;
-  height: 42px;
-  padding: 0 12px;
-  border: 2px solid #4b5b5c;
-  border-radius: 8px;
-  font-weight: 700;
-  background: #101b1d;
-  color: #fff;
-  transition:
-    border-color .3s ease,
-    background .3s ease,
-    color .3s ease,
-    box-shadow .3s ease,
-    transform .2s ease;
-}
-
-.size-option:hover span {
-  border-color: #00ffcc;
-  transform: scale(1.05);
-  box-shadow:
-    0 0 7px rgba(0,255,204,.45),
-    0 0 15px rgba(0,255,204,.12);
-}
-
-.size-option input:checked + span {
-  background: rgba(0,255,204,.10);
-  border-color: #00ffcc;
-  color: #fff;
-  transform: scale(1.05);
-  box-shadow:
-    0 0 5px rgba(0,255,204,.65),
-    0 0 14px rgba(0,255,204,.30),
-    inset 0 0 10px rgba(0,255,204,.08);
-  animation: mantoSizeGlow 1.8s ease-in-out infinite;
-}
-
-/* Check pequeno no canto do tamanho selecionado */
-.size-option input:checked + span::after {
-  content: "✓";
-  position: absolute;
-  right: -8px;
-  top: -9px;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: #00ffcc;
-  color: #061919;
-  font-size: 10px;
-  font-weight: 900;
-  box-shadow:
-    0 0 5px #00ffcc,
-    0 0 12px rgba(0,255,204,.55);
-  animation: mantoNeonCheck .25s ease-out;
-}
-
-
-/* ---------- OPÇÕES DE FRETE ---------- */
-
-.frete-choice {
-  position: relative;
-  overflow: visible;
-  transition:
-    border-color .3s ease,
-    background .3s ease,
-    box-shadow .3s ease,
-    transform .2s ease;
-}
-
-.frete-choice input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.frete-choice::before {
-  content: "";
-  flex: 0 0 22px;
-  width: 22px;
-  height: 22px;
-  margin-top: 1px;
-  border: 2px solid #4b5b5c;
-  border-radius: 5px;
-  background: #101b1d;
-  box-sizing: border-box;
-  transition:
-    border-color .3s ease,
-    background .3s ease,
-    box-shadow .3s ease,
-    transform .25s ease;
-}
-
-.frete-choice:hover {
-  border-color: #00ffcc;
-  box-shadow: 0 0 12px rgba(0,255,204,.12);
-}
-
-.frete-choice:hover::before {
-  border-color: #00ffcc;
-  transform: scale(1.05);
-}
-
-.frete-choice:has(input:checked) {
-  border-color: #00ffcc;
-  background: rgba(0,255,204,.08);
-  box-shadow:
-    0 0 8px rgba(0,255,204,.12),
-    inset 0 0 15px rgba(0,255,204,.03);
-}
-
-.frete-choice:has(input:checked)::before {
-  content: "✓";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,255,204,.12);
-  border-color: #00ffcc;
-  color: #00ffcc;
-  font-size: 14px;
-  font-weight: 900;
-  box-shadow:
-    0 0 5px rgba(0,255,204,.75),
-    0 0 14px rgba(0,255,204,.30);
-  animation: mantoNeonCheck .25s ease-out;
-}
-
-
-/* ---------- EFEITO DE PARTÍCULAS/FAÍSCAS ---------- */
-
-/* Simula o brilho do Uiverse sem precisar alterar o JavaScript */
-.choice:has(input:checked) span::after,
-.delivery-choice:has(input:checked) span::after {
-  content: "";
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #00ffcc;
-  box-shadow:
-    15px -10px 0 rgba(0,255,204,.8),
-    -18px -5px 0 rgba(0,255,204,.65),
-    22px 13px 0 rgba(0,255,204,.55),
-    -20px 16px 0 rgba(0,255,204,.7);
-  opacity: 0;
-  pointer-events: none;
-  animation: mantoParticles .6s ease-out;
-}
-
-@keyframes mantoNeonCheck {
-  0% {
-    transform: scale(.35);
-    opacity: .2;
-  }
-  70% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes mantoNeonPulse {
-  0%, 100% {
-    opacity: .25;
-  }
-  50% {
-    opacity: .65;
-  }
-}
-
-@keyframes mantoSizeGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 5px rgba(0,255,204,.55),
-      0 0 12px rgba(0,255,204,.22),
-      inset 0 0 8px rgba(0,255,204,.05);
-  }
-  50% {
-    box-shadow:
-      0 0 7px rgba(0,255,204,.75),
-      0 0 18px rgba(0,255,204,.35),
-      inset 0 0 12px rgba(0,255,204,.08);
-  }
-}
-
-@keyframes mantoParticles {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.8);
-  }
-}
-
-
-/* ---------- ACESSIBILIDADE ---------- */
-
-.choice input:focus-visible ~ span,
-.delivery-choice input:focus-visible ~ span,
-.size-option input:focus-visible + span,
-.frete-choice input:focus-visible ~ span {
-  outline: 2px solid #00ffcc;
-  outline-offset: 3px;
-}
-
-
-/* ---------- CELULAR ---------- */
-
-@media (max-width: 600px) {
-  .choice::before,
-  .delivery-choice::before,
-  .frete-choice::before {
-    flex-basis: 20px;
-    width: 20px;
-    height: 20px;
-  }
-
-  .size-option span {
-    min-width: 48px;
-    height: 40px;
-  }
-}
-
